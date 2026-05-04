@@ -22,13 +22,13 @@ function App() {
   const [pokemons, setPokemons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedPokemon, setSelectedPokemon] = useState(null); // Nouvel état pour le Pokémon cliqué
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
 
   useEffect(() => {
     const fetchAllPokemons = async () => {
       setLoading(true);
 
-      // Optimisation : Promise.all permet de faire toutes les requêtes en parallèle
+
       const promises = [];
       for (let i = 1; i <= 151; i++) {
         const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
@@ -47,7 +47,6 @@ function App() {
       pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Fonction pour fermer la modale
   const closeModal = () => setSelectedPokemon(null);
 
   return (
@@ -78,7 +77,7 @@ function App() {
                         key={pokemon.id}
                         className="pokemon-card"
                         style={{ backgroundColor: bgColor }}
-                        onClick={() => setSelectedPokemon(pokemon)} // Ouvre la modale au clic
+                        onClick={() => setSelectedPokemon(pokemon)}
                     >
                       <div className="img-container">
                         <img src={sprite} alt={name} />
@@ -94,12 +93,12 @@ function App() {
             </div>
         )}
 
-        {/* Fenêtre Modale pour les Stats */}
+
         {selectedPokemon && (
             <div className="modal-overlay" onClick={closeModal}>
               <div
                   className="modal-content"
-                  onClick={(e) => e.stopPropagation()} // Empêche la fermeture si on clique à l'intérieur
+                  onClick={(e) => e.stopPropagation()}
                   style={{ backgroundColor: typeColors[selectedPokemon.types[0].type.name] || '#f5f5f5' }}
               >
                 <button className="close-btn" onClick={closeModal}>&times;</button>
@@ -119,7 +118,6 @@ function App() {
                         <span className="stat-name">{stat.stat.name.replace('-', ' ')}</span>
                         <span className="stat-value">{stat.base_stat}</span>
                         <div className="stat-bar-bg">
-                          {/* La stat max théorique est souvent considérée autour de 255 */}
                           <div
                               className="stat-bar-fill"
                               style={{ width: `${Math.min((stat.base_stat / 150) * 100, 100)}%` }}

@@ -215,18 +215,18 @@
 
 .stat-bar-fill {
   height: 100%;
-  background-color: #4caf50; /* Couleur par défaut */
+  background-color: #4caf50;
   border-radius: 5px;
   transition: width 0.5s ease-out;
 }
 
-/* Changer la couleur de la barre en fonction de la stat (optionnel mais sympa) */
-.stat-row:nth-child(1) .stat-bar-fill { background-color: #ff5959; } /* HP */
-.stat-row:nth-child(2) .stat-bar-fill { background-color: #f5ac78; } /* Attack */
-.stat-row:nth-child(3) .stat-bar-fill { background-color: #fae078; } /* Defense */
-.stat-row:nth-child(4) .stat-bar-fill { background-color: #9db7f5; } /* Sp. Atk */
-.stat-row:nth-child(5) .stat-bar-fill { background-color: #a7db8d; } /* Sp. Def */
-.stat-row:nth-child(6) .stat-bar-fill { background-color: #fa92b2; } /* Speed */
+
+.stat-row:nth-child(1) .stat-bar-fill { background-color: #ff5959; }
+.stat-row:nth-child(2) .stat-bar-fill { background-color: #f5ac78; }
+.stat-row:nth-child(3) .stat-bar-fill { background-color: #fae078; }
+.stat-row:nth-child(4) .stat-bar-fill { background-color: #9db7f5; }
+.stat-row:nth-child(5) .stat-bar-fill { background-color: #a7db8d; }
+.stat-row:nth-child(6) .stat-bar-fill { background-color: #fa92b2; }
 
 .extra-info {
   display: flex;
