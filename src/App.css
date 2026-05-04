@@ -89,3 +89,151 @@
   color: #555;
   font-weight: 500;
 }
+
+
+.pokemon-card {
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer; /* NOUVEAU */
+}
+
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  border-radius: 25px;
+  padding: 30px;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.close-btn:hover {
+  opacity: 1;
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 2rem;
+}
+
+.modal-header img {
+  width: 180px;
+  height: 180px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.stats-container {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.stats-container h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #444;
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.stat-name {
+  width: 110px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555;
+  text-transform: capitalize;
+}
+
+.stat-value {
+  width: 35px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #333;
+  text-align: right;
+  margin-right: 15px;
+}
+
+.stat-bar-bg {
+  flex-grow: 1;
+  height: 10px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.stat-bar-fill {
+  height: 100%;
+  background-color: #4caf50; /* Couleur par défaut */
+  border-radius: 5px;
+  transition: width 0.5s ease-out;
+}
+
+/* Changer la couleur de la barre en fonction de la stat (optionnel mais sympa) */
+.stat-row:nth-child(1) .stat-bar-fill { background-color: #ff5959; } /* HP */
+.stat-row:nth-child(2) .stat-bar-fill { background-color: #f5ac78; } /* Attack */
+.stat-row:nth-child(3) .stat-bar-fill { background-color: #fae078; } /* Defense */
+.stat-row:nth-child(4) .stat-bar-fill { background-color: #9db7f5; } /* Sp. Atk */
+.stat-row:nth-child(5) .stat-bar-fill { background-color: #a7db8d; } /* Sp. Def */
+.stat-row:nth-child(6) .stat-bar-fill { background-color: #fa92b2; } /* Speed */
+
+.extra-info {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  font-size: 0.9rem;
+  color: #444;
+}
