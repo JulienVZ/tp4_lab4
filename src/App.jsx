@@ -1,122 +1,91 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState, useEffect } from 'react';
+import './App.css';
+
+const typeColors = {
+  fire: '#FDDFDF',
+  grass: '#DEFDE0',
+  electric: '#FCF7DE',
+  water: '#DEF3FD',
+  ground: '#f4e7da',
+  rock: '#d5d5d4',
+  fairy: '#fceaff',
+  poison: '#98d7a5',
+  bug: '#f8d5a3',
+  dragon: '#97b3e6',
+  psychic: '#eaeda1',
+  flying: '#F5F5F5',
+  fighting: '#E6E0D4',
+  normal: '#F5F5F5'
+};
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [pokemons, setPokemons] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    const fetchAllPokemons = async () => {
+      setLoading(true);
+      const fetchedPokemons = [];
+
+      for (let i = 1; i <= 151; i++) {
+        const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        fetchedPokemons.push(data);
+      }
+
+      setPokemons(fetchedPokemons);
+      setLoading(false);
+    };
+
+    fetchAllPokemons();
+  }, []);
+
+  const filteredPokemons = pokemons.filter(pokemon =>
+      pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      <div className="app-container">
+        <h1>Pokédex Masterclass</h1>
 
-      <div className="ticks"></div>
+        <input
+            type="text"
+            placeholder="Rechercher un Pokémon..."
+            className="search-bar"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+        />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        {loading ? (
+            <div className="loading">Chargement du Pokédex... ⏳</div>
+        ) : (
+            <div className="grid-container">
+              {filteredPokemons.map((pokemon) => {
+                const type = pokemon.types[0].type.name;
+                const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
+                const id = pokemon.id.toString().padStart(3, '0');
+                const sprite = pokemon.sprites.other['official-artwork'].front_default;
+                const bgColor = typeColors[type] || '#f5f5f5';
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+                return (
+                    <div key={pokemon.id} className="pokemon-card" style={{ backgroundColor: bgColor }}>
+                      <div className="img-container">
+                        <img src={sprite} alt={name} />
+                      </div>
+                      <div className="info">
+                        <span className="number">#{id}</span>
+                        <h3 className="name">{name}</h3>
+                        <small className="type">Type: <span>{type}</span></small>
+                      </div>
+                    </div>
+                );
+              })}
+            </div>
+        )}
+      </div>
+  );
 }
 
-export default App
+export default App;
